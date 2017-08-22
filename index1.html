@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>lazyload throttle</title>
+        <link rel="stylesheet" href="http://axuebin.com/lazyload/normalize.css" />
+       <link rel="stylesheet" href="http://axuebin.com/lazyload/index.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="img-area"><img src="" alt="loading" class="my-photo lazyimg" data-original="http://axuebin.com/lazyload/img/img1.png"></div>
+        <div class="img-area"><img src="" alt="loading" class="my-photo lazyimg" data-original="http://axuebin.com/lazyload/img/img2.png"></div>
+        <div class="img-area"><img src="" alt="loading" class="my-photo lazyimg" data-original="http://axuebin.com/lazyload/img/img3.png"></div>
+        <div class="img-area"><img src="" alt="loading" class="my-photo lazyimg" data-original="http://axuebin.com/lazyload/img/img4.png"></div>
+        <div class="img-area"><img src="" alt="loading" class="my-photo lazyimg" data-original="http://axuebin.com/lazyload/img/img5.png"></div>
+        <div class="img-area"><img src="" alt="loading" class="my-photo lazyimg" data-original="http://axuebin.com/lazyload/img/img6.png"></div>
+        <div class="img-area"><img src="" alt="loading" class="my-photo lazyimg" data-original="http://axuebin.com/lazyload/img/img7.png"></div>
+        <div class="img-area"><img src="" alt="loading" class="my-photo lazyimg" data-original="http://axuebin.com/lazyload/img/img8.png"></div>
+        <div class="img-area"><img src="" alt="loading" class="my-photo lazyimg" data-original="http://axuebin.com/lazyload/img/img9.png"></div>
+        <div class="img-area"><img src="" alt="loading" class="my-photo lazyimg" data-original="http://axuebin.com/lazyload/img/img10.png"></div>
+    </div>
+    <script src="http://cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+    <script>
+       $(function() {
+           $(".lazyimg").lazyload({
+               placeholder: '',
+               effect: 'fadeIn',
+               threshold: 200
+           })
+       })
+    </script>
+</body>
+</html>

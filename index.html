@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>lazyload throttle</title>
+        <link rel="stylesheet" href="http://axuebin.com/lazyload/normalize.css" />
+       <link rel="stylesheet" href="http://axuebin.com/lazyload/index.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="img-area"><img src="" alt="loading" class="my-photo lazyimg" data-src="http://axuebin.com/lazyload/img/img1.png"></div>
+        <div class="img-area"><img src="" alt="loading" class="my-photo lazyimg" data-src="http://axuebin.com/lazyload/img/img2.png"></div>
+        <div class="img-area"><img src="" alt="loading" class="my-photo lazyimg" data-src="http://axuebin.com/lazyload/img/img3.png"></div>
+        <div class="img-area"><img src="" alt="loading" class="my-photo lazyimg" data-src="http://axuebin.com/lazyload/img/img4.png"></div>
+        <div class="img-area"><img src="" alt="loading" class="my-photo lazyimg" data-src="http://axuebin.com/lazyload/img/img5.png"></div>
+        <div class="img-area"><img src="" alt="loading" class="my-photo lazyimg" data-src="http://axuebin.com/lazyload/img/img6.png"></div>
+        <div class="img-area"><img src="" alt="loading" class="my-photo lazyimg" data-src="http://axuebin.com/lazyload/img/img7.png"></div>
+        <div class="img-area"><img src="" alt="loading" class="my-photo lazyimg" data-src="http://axuebin.com/lazyload/img/img8.png"></div>
+        <div class="img-area"><img src="" alt="loading" class="my-photo lazyimg" data-src="http://axuebin.com/lazyload/img/img9.png"></div>
+        <div class="img-area"><img src="" alt="loading" class="my-photo lazyimg" data-src="http://axuebin.com/lazyload/img/img10.png"></div>
+    </div>
+    <script>
+        // 性能问题 如果都给src 请求数并发太多
+        // 浏览器对http请求数有限制 5-6个线程 c++
+        // chrome 请求数比较多
+        // 打开页面就会变慢
+        // js优化 第一个就是减少http请求数
+        // script src 把所有的js 打包成一个文件 main.js
+        // import require 模块
+        // 一键打包 再压缩 bundle.min.js 减少了http请求数
+        // 首屏打开速度  静态资源会缓存
+        // link href 打包 bundle.min.js
+        // img src loading.gif data-src origin-src
+        
+        const imgs = document.querySelectorAll('.lazyimg')
+        // 页面加载完成 检查一下图片 如果图片在第一屏 显示出来
+        window.onload = checkImgs;
+        // 滚动的时候 浏览器是一个窗口 viewport 对应的网页内容发生变化 scrollTop
+        // 检测 我们滚过的那块区域 是否有还未显示的图片
+        // throttle 节流 不要执行的太频繁
+        // 高阶函数的应用场景 增强了函数的功能
+        window.onscroll = throttle(checkImgs);
+        function checkImgs () {
+            for([i, img] of Array.from(imgs).entries()){
+                console.log(i)
+                console.log(img)
+                if(isInSight(imgs[i])){
+                    loadImg(imgs[i])
+                }
+            }
+        }
+        function isInSight (el) {
+            const bound = el.getBoundingClientRect()
+            console.log(bound)
+            const clientHeight = window.innerHeight
+            return bound.top <= clientHeight + 100
+        }
+        function loadImg (el) {
+            const src = el.dataset.src
+            if(src != el.src){
+                const source = src
+                let img = document.createElement('img')
+                img.onload = function () {
+                el.src = source
+            }
+            img.src = source
+            }
+        }
+        function throttle (fn, mustRun = 500) {
+            const timer = null
+            let previous = null
+            return function () {
+                const now = new Date()
+                const that = this
+                const args = arguments
+                if(!previous){
+                    previous = now
+                }
+                const remaining = now - previous
+                if(mustRun && remaining >=mustRun){
+                    fn.apply(that, args)
+                    previous = now
+                }
+            }
+        }
+    </script>
+</body>
+</html>
